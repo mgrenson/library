@@ -1,0 +1,106 @@
+<odoo>
+    <data>
+        <record id="library.kanban_book" model="ir.ui.view">
+            <field name="name">Book Kanban</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('library.book', 'image_128', record.id.raw_value)"
+                                         alt="Book" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                        <small t-if="record.isbn.value">[<field name="isbn"/>]
+                                        </small>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="library.list_book">
+            <field name="name">Book List</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" string="Title"/>
+                    <field name="isbn"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="library.form_book">
+            <field name="name">Book form</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name" string="Title"/>
+                            <field name="author_ids" widget="many2many_tags"/>
+                            <field name="publisher_id"/>
+                            <field name="date_published"/>
+                            <field name="isbn"/>
+                            <field name="image_1920" widget="image" class="oe_avatar"
+                                   options="{'preview_image': 'image_128'}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="library.action_book">
+            <field name="name">Library books</field>
+            <field name="res_model">library.book</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+
+        <!-- server action to the one above -->
+        <!--
+        <record model="ir.actions.server" id="library.action_server">
+          <field name="name">library server</field>
+          <field name="model_id" ref="model_library_library"/>
+          <field name="state">code</field>
+          <field name="code">
+            action = {
+              "type": "ir.actions.act_window",
+              "view_mode": "tree,form",
+              "res_model": model._name,
+            }
+          </field>
+        </record>
+        -->
+
+        <!-- Top menu item -->
+        <menuitem name="library"
+                  id="library.menu_root"/>
+
+        <!-- menu categories -->
+        <menuitem name="Master data"
+                  id="library.menu_master_data"
+                  parent="library.menu_root"/>
+
+        <!-- actions -->
+        <menuitem name="Books"
+                  id="library.menu_books"
+                  parent="library.menu_master_data"
+                  action="library.action_book"/>
+
+    </data>
+    >
+</odoo>
