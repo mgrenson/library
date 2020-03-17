@@ -1,30 +1,27 @@
-<odoo>
+<odoo noupdate="1">
     <data>
-<!--
-          <record id="object0" model="library.library">
-            <field name="name">Object 0</field>
-            <field name="value">0</field>
-          </record>
 
-          <record id="object1" model="library.library">
-            <field name="name">Object 1</field>
-            <field name="value">10</field>
-          </record>
+        <record model="res.partner" id="res_partner_daniel_reis">
+            <field name="name">Daniel Reis</field>
+        </record>
 
-          <record id="object2" model="library.library">
-            <field name="name">Object 2</field>
-            <field name="value">20</field>
-          </record>
+        <record model="res.partner" id="res_partner_pakt">
+            <field name="name">Pakt</field>
+            <field name="is_company">1</field>
+        </record>
 
-          <record id="object3" model="library.library">
-            <field name="name">Object 3</field>
-            <field name="value">30</field>
-          </record>
-
-          <record id="object4" model="library.library">
-            <field name="name">Object 4</field>
-            <field name="value">40</field>
-          </record>
--->
+        <record model="library.book" id="book_odoo12_essential">
+            <field name="name">Odoo 12 Development Essentials fourth edition</field>
+            <field name="publisher_id" ref="res_partner_pakt"/>
+            <field name="author_ids" eval="[(6, 0, [ref('res_partner_daniel_reis')])]"/>
+            <field name="isbn">978-1-78953-247-0</field>
+            <field name="date_published">2018-12-01</field>
+            <field name="image_1920" type="base64" file="library/static/img/library_book_odoo12_essential.jpeg"/>
+            <field name="description">
+                Odoo is one of the best platforms for open source ERP and CRM. Its latest version, Odoo 12, brings with it new features and updates in Python packages to develop more customizable applications with additional cloud capabilities.
+                The book begins by covering the development essentials for building business applications. You will start your journey by learning how to install and configure Odoo, and then transition from having no specific knowledge of Odoo to being ready for application development. You will develop your first Odoo application and understand topics such as models and views. Odoo 12 Development Essentials will also guide you in using server APIs to add business logic, helping you lay a solid foundation for advanced topics. As you progress through the chapters, you will be equipped to build and customize your applications and explore the new features in Odoo 12, such as cloud integration, to scale your business applications. You will get insights into building business logic and integrating various APIs into your application.
+                By the end of the book, you will be able to build a business application from scratch by using the latest version of Odoo.
+            </field>
+        </record>
     </data>
 </odoo>

@@ -1,6 +1,21 @@
 <odoo>
     <data>
-        <record id="library.kanban_book" model="ir.ui.view">
+
+        <record id="book_search" model="ir.ui.view">
+            <field name="name">Book filters</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"
+                           filter_domain="['|', '|', ('name', 'ilike', self), ('isbn', 'ilike', self), ('description', 'ilike', self)]"/>
+                    <field name="publisher_id"/>
+                    <filter name="filter_inactive" string="Inactive" domain="[('active', '=', False)]"/>
+                    <filter name="filter_active" string="Active" domain="[('active', '=', True)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="book_kanban" model="ir.ui.view">
             <field name="name">Book Kanban</field>
             <field name="model">library.book</field>
             <field name="arch" type="xml">
@@ -27,34 +42,43 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="library.list_book">
+        <record id="book_list" model="ir.ui.view">
             <field name="name">Book List</field>
             <field name="model">library.book</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="name" string="Title"/>
                     <field name="isbn"/>
+                    <field name="publisher_id"/>
                 </tree>
             </field>
         </record>
 
-        <record model="ir.ui.view" id="library.form_book">
+        <record id="book_form" model="ir.ui.view">
             <field name="name">Book form</field>
             <field name="model">library.book</field>
             <field name="arch" type="xml">
                 <form>
                     <header>
-
+                        <button name="button_check_isbn" type="object" string="Check ISBN"/>
                     </header>
                     <sheet>
                         <group>
-                            <field name="name" string="Title"/>
-                            <field name="author_ids" widget="many2many_tags"/>
-                            <field name="publisher_id"/>
-                            <field name="date_published"/>
-                            <field name="isbn"/>
-                            <field name="image_1920" widget="image" class="oe_avatar"
-                                   options="{'preview_image': 'image_128'}"/>
+                            <group name="group_left">
+                                <field name="name" string="Title"/>
+                                <field name="author_ids" widget="many2many_tags"/>
+                                <field name="publisher_id"/>
+                                <field name="date_published"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="image_1920"
+                                       widget="image"
+                                       class="oe_avatar"
+                                       options="{'preview_image': 'image_128'}"/>
+                                <field name="isbn"/>
+                                <field name="active"/>
+                            </group>
+                            <field name="description"/>
                         </group>
                     </sheet>
                 </form>
@@ -63,12 +87,11 @@
 
         <!-- actions opening views on models -->
 
-        <record model="ir.actions.act_window" id="library.action_book">
+        <record id="book_action" model="ir.actions.act_window" >
             <field name="name">Library books</field>
             <field name="res_model">library.book</field>
             <field name="view_mode">kanban,tree,form</field>
         </record>
-
 
         <!-- server action to the one above -->
         <!--
@@ -97,10 +120,9 @@
 
         <!-- actions -->
         <menuitem name="Books"
-                  id="library.menu_books"
+                  id="library.menu_book"
                   parent="library.menu_master_data"
-                  action="library.action_book"/>
+                  action="library.book_action"/>
 
     </data>
-    >
 </odoo>
